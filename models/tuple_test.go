@@ -303,6 +303,11 @@ func TestTuple_Magnitude(t *testing.T) {
 			tuple:  Vector(-1, -2, -3),
 			result: math.Sqrt(14),
 		},
+		{
+			name:   "The magnitude of a normalized vector",
+			tuple:  Vector(1, 2, 3).Normalize(),
+			result: 1,
+		},
 	}
 
 	for _, c := range cases {
@@ -310,6 +315,33 @@ func TestTuple_Magnitude(t *testing.T) {
 
 		if utils.FloatEquals(result, c.result) {
 			t.Errorf("%s - failed getting magnitud of tuple: expected (%v) but got (%v)", c.name, c.result, result)
+		}
+	}
+}
+
+func TestTuple_Normalize(t *testing.T) {
+	cases := []struct {
+		name   string
+		tuple  *Tuple
+		result *Tuple
+	}{
+		{
+			name:   "Normalizing vector(4, 0, 0) gives (1, 0, 0)",
+			tuple:  Vector(4, 0, 0),
+			result: Vector(1, 0, 0),
+		},
+		{
+			name:   "Normalizing vector(1, 2, 3)",
+			tuple:  Vector(1, 2, 3),
+			result: Vector(0.26726, 0.53452, 0.80178),
+		},
+	}
+
+	for _, c := range cases {
+		result := c.tuple.Normalize()
+
+		if result.Equal(*c.result) {
+			t.Errorf("%s - failed normalicing tuple: expected (%v) but got (%v)", c.name, c.result, result)
 		}
 	}
 }
