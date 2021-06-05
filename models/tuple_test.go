@@ -1,6 +1,10 @@
 package models
 
-import "testing"
+import (
+	"github.com/laiweil/goray-tracer/utils"
+	"math"
+	"testing"
+)
 
 func TestPoint(t *testing.T) {
 
@@ -252,7 +256,7 @@ func TestTuple_Divide(t *testing.T) {
 		result *Tuple
 	}{
 		{
-			name:   "OK/Multiplying_Tuple",
+			name:   "OK/Diving_Tuple",
 			tuple:  Vector(1, -2, 3),
 			scalar: 2,
 			result: Vector(0.5, -1, 1.5),
@@ -264,6 +268,48 @@ func TestTuple_Divide(t *testing.T) {
 
 		if !c.result.Equal(*result) {
 			t.Errorf("%s - failed diving tuple: expected (%v) but got (%v)", c.name, c.result, result)
+		}
+	}
+}
+
+func TestTuple_Magnitude(t *testing.T) {
+	cases := []struct {
+		name   string
+		tuple  *Tuple
+		result float64
+	}{
+		{
+			name:   "OK/Magnitude_Vector_1",
+			tuple:  Vector(1, 0, 0),
+			result: 1,
+		},
+		{
+			name:   "OK/Magnitude_Vector_2",
+			tuple:  Vector(0, 1, 0),
+			result: 1,
+		},
+		{
+			name:   "OK/Magnitude_Vector_3",
+			tuple:  Vector(0, 0, 1),
+			result: 1,
+		},
+		{
+			name:   "OK/Magnitude_Vector_Not_unitary",
+			tuple:  Vector(1, 2, 3),
+			result: math.Sqrt(14),
+		},
+		{
+			name:   "OK/Magnitude_Vector_Negative",
+			tuple:  Vector(-1, -2, -3),
+			result: math.Sqrt(14),
+		},
+	}
+
+	for _, c := range cases {
+		result := c.tuple.Magnitude()
+
+		if utils.FloatEquals(result, c.result) {
+			t.Errorf("%s - failed getting magnitud of tuple: expected (%v) but got (%v)", c.name, c.result, result)
 		}
 	}
 }

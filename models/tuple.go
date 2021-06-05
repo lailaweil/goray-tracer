@@ -1,6 +1,9 @@
 package models
 
-import "github.com/laiweil/goray-tracer/utils"
+import (
+	"github.com/laiweil/goray-tracer/utils"
+	"math"
+)
 
 type Tuple struct {
 	X float64
@@ -81,4 +84,8 @@ func (t Tuple) Divide(scalar float64) *Tuple {
 		Z: t.Z / scalar,
 		W: t.W / byte(scalar),
 	}
+}
+
+func (t Tuple) Magnitude() float64 {
+	return math.Sqrt(math.Exp2(t.X) + math.Exp2(t.Y) + math.Exp2(t.Z) + math.Exp2(float64(t.W)))
 }
