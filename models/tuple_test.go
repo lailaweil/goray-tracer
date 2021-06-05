@@ -374,3 +374,32 @@ func TestTuple_Dot(t *testing.T) {
 		}
 	}
 }
+
+func TestTuple_Cross(t *testing.T) {
+	cases := []struct {
+		name   string
+		tupleA *Tuple
+		tupleB *Tuple
+		result *Tuple
+	}{
+		{
+			name:   "The cross product of two vectors",
+			tupleA: Vector(1, 2, 3),
+			tupleB: Vector(2, 3, 4),
+			result: Vector(-1, 2, -1),
+		}, {
+			name:   "The cross product of two vectors",
+			tupleA: Vector(2, 3, 4),
+			tupleB: Vector(1, 2, 3),
+			result: Vector(1, -2, 1),
+		},
+	}
+
+	for _, c := range cases {
+		result := c.tupleA.Cross(*c.tupleB)
+
+		if !result.Equal(*c.result) {
+			t.Errorf("%s - failed operating the dot product: expected (%v) but got (%v)", c.name, c.result, result)
+		}
+	}
+}
