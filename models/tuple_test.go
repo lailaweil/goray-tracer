@@ -358,6 +358,11 @@ func TestTuple_Dot(t *testing.T) {
 			tupleA: Vector(1, 2, 3),
 			tupleB: Vector(2, 3, 4),
 			result: 20,
+		}, {
+			name:   "The dot product of two exact tuples must be 1",
+			tupleA: Vector(1, 0, 0),
+			tupleB: Vector(1, 0, 0),
+			result: 1,
 		},
 	}
 
