@@ -9,7 +9,7 @@ type Tuple struct {
 	X float64
 	Y float64
 	Z float64
-	W int
+	W float64
 }
 
 func Vector(x, y, z float64) *Tuple {
@@ -31,15 +31,15 @@ func Point(x, y, z float64) *Tuple {
 }
 
 func (t Tuple) IsVector() bool {
-	return t.W == 0
+	return utils.FloatEquals(t.W, 0)
 }
 
 func (t Tuple) IsPoint() bool {
-	return t.W == 1
+	return utils.FloatEquals(t.W, 1)
 }
 
 func (a Tuple) Equal(b Tuple) bool {
-	return utils.FloatEquals(a.X, b.X) && utils.FloatEquals(a.Y, b.Y) && utils.FloatEquals(a.Z, b.Z) && a.W == b.W
+	return utils.FloatEquals(a.X, b.X) && utils.FloatEquals(a.Y, b.Y) && utils.FloatEquals(a.Z, b.Z) && utils.FloatEquals(a.W, b.W)
 }
 func (a Tuple) Add(b Tuple) *Tuple {
 	return &Tuple{
@@ -73,7 +73,7 @@ func (t Tuple) Multiply(scalar float64) *Tuple {
 		X: t.X * scalar,
 		Y: t.Y * scalar,
 		Z: t.Z * scalar,
-		W: t.W * int(scalar),
+		W: t.W * scalar,
 	}
 }
 
@@ -82,12 +82,12 @@ func (t Tuple) Divide(scalar float64) *Tuple {
 		X: t.X / scalar,
 		Y: t.Y / scalar,
 		Z: t.Z / scalar,
-		W: t.W / int(scalar),
+		W: t.W / scalar,
 	}
 }
 
 func (t Tuple) Magnitude() float64 {
-	return math.Sqrt(math.Pow(t.X, 2) + math.Pow(t.Y, 2) + math.Pow(t.Z, 2) + math.Pow(float64(t.W), 2))
+	return math.Sqrt(math.Pow(t.X, 2) + math.Pow(t.Y, 2) + math.Pow(t.Z, 2) + math.Pow(t.W, 2))
 }
 
 func (t Tuple) Normalize() *Tuple {
@@ -96,12 +96,12 @@ func (t Tuple) Normalize() *Tuple {
 		X: t.X / magnitude,
 		Y: t.Y / magnitude,
 		Z: t.Z / magnitude,
-		W: t.W / int(magnitude),
+		W: t.W / magnitude,
 	}
 }
 
 func (a Tuple) Dot(b Tuple) float64 {
-	return a.X*b.X + a.Y*b.Y + a.Z*b.Z + float64(a.W*b.W)
+	return a.X*b.X + a.Y*b.Y + a.Z*b.Z + a.W*b.W
 }
 
 func (a Tuple) Cross(b Tuple) *Tuple {
