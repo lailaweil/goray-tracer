@@ -345,3 +345,27 @@ func TestTuple_Normalize(t *testing.T) {
 		}
 	}
 }
+
+func TestTuple_Dot(t *testing.T) {
+	cases := []struct {
+		name   string
+		tupleA *Tuple
+		tupleB *Tuple
+		result float64
+	}{
+		{
+			name:   "The dot product of two tuples",
+			tupleA: Vector(1, 2, 3),
+			tupleB: Vector(2, 3, 4),
+			result: 20,
+		},
+	}
+
+	for _, c := range cases {
+		result := c.tupleA.Dot(*c.tupleB)
+
+		if !utils.FloatEquals(result, c.result) {
+			t.Errorf("%s - failed operating the dot product: expected (%v) but got (%v)", c.name, c.result, result)
+		}
+	}
+}

@@ -10,7 +10,7 @@ type Tuple struct {
 	X float64
 	Y float64
 	Z float64
-	W byte
+	W int
 }
 
 func Vector(x, y, z float64) *Tuple {
@@ -76,7 +76,7 @@ func (t Tuple) Multiply(scalar float64) *Tuple {
 		X: t.X * scalar,
 		Y: t.Y * scalar,
 		Z: t.Z * scalar,
-		W: t.W * byte(scalar),
+		W: t.W * int(scalar),
 	}
 }
 
@@ -85,7 +85,7 @@ func (t Tuple) Divide(scalar float64) *Tuple {
 		X: t.X / scalar,
 		Y: t.Y / scalar,
 		Z: t.Z / scalar,
-		W: t.W / byte(scalar),
+		W: t.W / int(scalar),
 	}
 }
 
@@ -99,6 +99,10 @@ func (t Tuple) Normalize() *Tuple {
 		X: t.X / magnitude,
 		Y: t.Y / magnitude,
 		Z: t.Z / magnitude,
-		W: t.W / byte(magnitude),
+		W: t.W / int(magnitude),
 	}
+}
+
+func (a Tuple) Dot(b Tuple) float64 {
+	return a.X*b.X + a.Y*b.Y + a.Z*b.Z + float64(a.W*b.W)
 }
