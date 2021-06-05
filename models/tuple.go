@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/laiweil/goray-tracer/utils"
 	"math"
 )
@@ -39,6 +40,8 @@ func (t Tuple) IsPoint() bool {
 }
 
 func (a Tuple) Equal(b Tuple) bool {
+	result := utils.FloatEquals(a.X, b.X)
+	fmt.Sprintf("hola resultado %t", result)
 	return utils.FloatEquals(a.X, b.X) && utils.FloatEquals(a.Y, b.Y) && utils.FloatEquals(a.Z, b.Z) && a.W == b.W
 }
 func (a Tuple) Add(b Tuple) *Tuple {
@@ -87,7 +90,7 @@ func (t Tuple) Divide(scalar float64) *Tuple {
 }
 
 func (t Tuple) Magnitude() float64 {
-	return math.Sqrt(math.Exp2(t.X) + math.Exp2(t.Y) + math.Exp2(t.Z) + math.Exp2(float64(t.W)))
+	return math.Sqrt(math.Pow(t.X, 2) + math.Pow(t.Y, 2) + math.Pow(t.Z, 2) + math.Pow(float64(t.W), 2))
 }
 
 func (t Tuple) Normalize() *Tuple {

@@ -313,7 +313,7 @@ func TestTuple_Magnitude(t *testing.T) {
 	for _, c := range cases {
 		result := c.tuple.Magnitude()
 
-		if utils.FloatEquals(result, c.result) {
+		if !utils.FloatEquals(result, c.result) {
 			t.Errorf("%s - failed getting magnitud of tuple: expected (%v) but got (%v)", c.name, c.result, result)
 		}
 	}
@@ -340,7 +340,7 @@ func TestTuple_Normalize(t *testing.T) {
 	for _, c := range cases {
 		result := c.tuple.Normalize()
 
-		if result.Equal(*c.result) {
+		if !result.Equal(*c.result) {
 			t.Errorf("%s - failed normalicing tuple: expected (%v) but got (%v)", c.name, c.result, result)
 		}
 	}
