@@ -28,7 +28,7 @@ func main() {
 		wind:    models.Vector(-0.01, 0, 0),
 	}
 
-	for projectile.position.Y > 0 {
+	for projectile.position[models.Y] > 0 {
 		ticks++
 		projectile = Tick(environment, projectile)
 
