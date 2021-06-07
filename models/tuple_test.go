@@ -6,31 +6,6 @@ import (
 	"testing"
 )
 
-func TestColor(t *testing.T) {
-
-	cases := []struct {
-		name  string
-		red   float64
-		green float64
-		blue  float64
-	}{
-		{
-			name:  "OK/Color",
-			red:   -0.5,
-			green: 0.4,
-			blue:  1.7,
-		},
-	}
-
-	for _, c := range cases {
-		result := Color(c.red, c.green, c.blue)
-
-		if !utils.FloatEquals(result[W], 1.0) || !utils.FloatEquals(result[Red], -0.5) || !utils.FloatEquals(result[Blue], 1.7) {
-			t.Errorf("%s - failed creating color: expected w to be (%v) but got (%v)", c.name, 1, result)
-		}
-	}
-}
-
 func TestPoint(t *testing.T) {
 
 	cases := []struct {

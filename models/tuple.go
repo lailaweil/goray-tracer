@@ -15,10 +15,6 @@ func Point(x, y, z float64) *Tuple {
 	return &Tuple{x, y, z, 1.0}
 }
 
-func Color(red, green, blue float64) *Tuple {
-	return &Tuple{red, green, blue, 1.0}
-}
-
 func (t Tuple) IsVector() bool {
 	return utils.FloatEquals(t[W], 0)
 }
