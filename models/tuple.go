@@ -8,11 +8,15 @@ import (
 type Tuple [4]float64
 
 func Vector(x, y, z float64) *Tuple {
-	return &Tuple{x, y, z, 0}
+	return &Tuple{x, y, z, 0.0}
 }
 
 func Point(x, y, z float64) *Tuple {
-	return &Tuple{x, y, z, 1}
+	return &Tuple{x, y, z, 1.0}
+}
+
+func Color(red, green, blue float64) *Tuple {
+	return &Tuple{red, green, blue, 1.0}
 }
 
 func (t Tuple) IsVector() bool {
