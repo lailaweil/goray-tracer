@@ -33,3 +33,59 @@ func TestCreateCanvas(t *testing.T) {
 
 	}
 }
+
+func TestCanvas_WritePixel(t *testing.T) {
+	cases := []struct {
+		name   string
+		canvas *Canvas
+		x      int
+		y      int
+		color  *Tuple
+		hasErr bool
+	}{
+		{
+			name:   "Writing pixels to a canvas",
+			canvas: CreateCanvas(10, 20),
+			x:      2,
+			y:      3,
+			color:  Color(1, 0, 0),
+			hasErr: false,
+		},
+		{
+			name:   "Writing pixels to a canvas fails",
+			canvas: CreateCanvas(10, 20),
+			x:      10,
+			y:      2,
+			color:  Color(1, 0, 0),
+			hasErr: true,
+		},
+		{
+			name:   "Writing pixels to a canvas fails 2",
+			canvas: CreateCanvas(10, 20),
+			x:      3,
+			y:      20,
+			color:  Color(1, 0, 0),
+			hasErr: true,
+		},
+	}
+
+	for _, c := range cases {
+		err := c.canvas.WritePixel(c.x, c.y, *c.color)
+
+		if (err != nil && !c.hasErr) || (err == nil && c.hasErr) {
+			t.Errorf("%s - failed Writing pixel: expected error to be (%v) but got (%v)", c.name, c.hasErr, err)
+		}
+
+		pixel, err := c.canvas.PixelAt(c.x, c.y)
+
+		if err != nil && !c.hasErr {
+			t.Errorf("%s - failed getting pixel: %v", c.name, err)
+		}
+
+		if err == nil && !pixel.Equal(*c.color) {
+			t.Errorf("%s - failed Writing pixel: expected pixel to be (%v) but got (%v)", c.name, c.color, pixel)
+		}
+
+	}
+
+}

@@ -1,8 +1,13 @@
 package models
 
+import (
+	"errors"
+	genericError "github.com/laiweil/goray-tracer/errors"
+)
+
 type Canvas struct {
-	Width  int
-	Height int
+	width  int
+	height int
 	pixels [][]Tuple
 }
 
@@ -14,8 +19,31 @@ func CreateCanvas(width int, height int) *Canvas {
 	}
 
 	return &Canvas{
-		Width:  width,
-		Height: height,
+		width:  width,
+		height: height,
 		pixels: pixels,
 	}
+}
+
+func (c Canvas) Height() int {
+	return c.height
+}
+
+func (c Canvas) Width() int {
+	return c.width
+}
+
+func (c *Canvas) WritePixel(x, y int, color Tuple) error {
+	if x >= c.width || y >= c.height {
+		return genericError.CreateGenericError(errors.New("pixels out of canvas"), "Error: pixel out of canvas")
+	}
+	c.pixels[x][y] = color
+	return nil
+}
+
+func (c *Canvas) PixelAt(x, y int) (*Tuple, error) {
+	if x >= c.width || y >= c.height {
+		return nil, genericError.CreateGenericError(errors.New("pixels out of canvas"), "Error: pixel out of canvas")
+	}
+	return &c.pixels[x][y], nil
 }
