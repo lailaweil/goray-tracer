@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"github.com/laiweil/goray-tracer/utils"
+	"strings"
 	"testing"
 )
 
@@ -88,4 +90,57 @@ func TestCanvas_WritePixel(t *testing.T) {
 
 	}
 
+}
+
+func TestCanvas_GetPPMHeader(t *testing.T) {
+	cases := []struct {
+		name   string
+		canvas *Canvas
+		result string
+	}{
+		{
+			name:   "Constructing the PPM header",
+			canvas: CreateCanvas(5, 3),
+			result: fmt.Sprintf(PPMHeader, PPMIdentifier, 5, 3, MaxColor),
+		},
+	}
+
+	for _, c := range cases {
+		result := c.canvas.GetPPMHeader()
+
+		if strings.Compare(result, c.result) != 0 {
+			t.Errorf("%s - failed creating PPM header of canvas: expected to be (%v) but got (%v)", c.name, c.result, result)
+		}
+	}
+}
+
+func TestCanvas_ToPPM(t *testing.T) {
+	cases := []struct {
+		name   string
+		canvas *Canvas
+		color1 *Tuple
+		color2 *Tuple
+		color3 *Tuple
+	}{
+		{
+			name:   "Constructing the PPM pixel data",
+			canvas: CreateCanvas(5, 3),
+			color1: Color(1.5, 0, 0),
+			color2: Color(0, 0.5, 0),
+			color3: Color(-0.5, 0, 1),
+		},
+	}
+
+	for _, c := range cases {
+		c.canvas.WritePixel(0, 0, *c.color1)
+		c.canvas.WritePixel(2, 1, *c.color2)
+		c.canvas.WritePixel(4, 2, *c.color3)
+
+		result := c.canvas.ToPPM()
+
+		if !strings.Contains(result, "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0") || !strings.Contains(result, "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0") || !strings.Contains(result, "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255") {
+			t.Errorf("%s - failed creating PPM file of canvas: got (%v)", c.name, result)
+		}
+
+	}
 }
