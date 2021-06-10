@@ -138,7 +138,7 @@ func TestCanvas_ToPPM(t *testing.T) {
 
 		result := c.canvas.ToPPM()
 
-		if !strings.Contains(result, "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0") || !strings.Contains(result, "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0") || !strings.Contains(result, "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255") {
+		if !strings.Contains(result, "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n") || !strings.Contains(result, "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n") || !strings.Contains(result, "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n") {
 			t.Errorf("%s - failed creating PPM file of canvas: got (%v)", c.name, result)
 		}
 

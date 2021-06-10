@@ -41,7 +41,7 @@ func (c Canvas) Pixels() [][]Tuple {
 }
 
 func (c *Canvas) WritePixel(x, y int, color Tuple) error {
-	if x >= c.width || y >= c.height {
+	if x >= c.width || y >= c.height || x < 0 || y < 0 {
 		return genericError.CreateGenericError(errors.New("pixels out of canvas"), "Error: pixel out of canvas")
 	}
 	c.pixels[y][x] = color
@@ -67,6 +67,7 @@ func (c *Canvas) WritePPM(w io.Writer) error {
 	return nil
 }
 
+//TODO : implement splitting of lines (Max 70 characters)
 func (c Canvas) ToPPM() string {
 	finalPPM := c.GetPPMHeader()
 	rowPixels := ""
