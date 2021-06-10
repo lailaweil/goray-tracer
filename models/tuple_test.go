@@ -25,7 +25,7 @@ func TestPoint(t *testing.T) {
 	for _, c := range cases {
 		result := Point(c.x, c.y, c.z)
 
-		if result.W != 1 {
+		if result[W] != 1 {
 			t.Errorf("%s - failed creating point: expected w to be (%v) but got (%v)", c.name, 1, result)
 		}
 	}
@@ -50,7 +50,7 @@ func TestVector(t *testing.T) {
 	for _, c := range cases {
 		result := Vector(c.x, c.y, c.z)
 
-		if result.W != 0 {
+		if result[W] != 0 {
 			t.Errorf("%s - failed creating point: expected w to be (%v) but got (%v)", c.name, 0, result)
 		}
 	}
